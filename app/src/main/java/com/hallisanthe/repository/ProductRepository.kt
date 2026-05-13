@@ -153,22 +153,22 @@ class ProductRepository(private val context: Context) {
         val demo = listOf(
             Product("d1","Channapatna Toy","ಚನ್ನಪಟ್ಟಣ ಆಟಿಕೆ","चन्नपटना खिलौना","சன்னபட்டண பொம்மை",
                 250.0,"Handmade lacquerware toy from Channapatna artisans","ಚನ್ನಪಟ್ಟಣದ ಕಲಾವಿದರಿಂದ ತಯಾರಿಸಲ್ಪಟ್ಟಿದೆ","TOYS",
-                "","Raju Gowda","9876543210","Channapatna, Karnataka",50,true),
+                "","Raju Gowda","9876543210","Channapatna, Karnataka",0.0,0.0,50,true),
             Product("d2","Ilkal Saree","ಇಳಕಲ್ ಸೀರೆ","इलकल साड़ी","இல்கல் சேலை",
                 1800.0,"Traditional handloom saree with Kasuti embroidery","ಸಾಂಪ್ರದಾಯಿಕ ಕೈಮಗ್ಗದ ಸೀರೆ","TEXTILES",
-                "","Savitha Devi","9845012345","Ilkal, Bagalkot",12,true),
+                "","Savitha Devi","9845012345","Ilkal, Bagalkot",0.0,0.0,12,true),
             Product("d3","Clay Pot Set","ಮಣ್ಣಿನ ಮಡಕೆ","मिट्टी के बर्तन","மண் பாத்திரம்",
                 450.0,"Handcrafted terracotta pots – set of 3","ಕೈಯಿಂದ ಮಾಡಿದ ಮಣ್ಣಿನ ಪಾತ್ರೆಗಳು","POTTERY",
-                "","Muniswamy","9900112233","Tumkur, Karnataka",25,true),
+                "","Muniswamy","9900112233","Tumkur, Karnataka",0.0,0.0,25,true),
             Product("d4","Byadagi Chilli","ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ","बयादगी मिर्च","பயாடகி மிளகாய்",
                 120.0,"Premium Byadagi chilli – 500g pack. GI tagged spice.","ಉತ್ತಮ ಗುಣಮಟ್ಟದ ಬ್ಯಾಡಗಿ ಮೆಣಸಿನಕಾಯಿ","FOOD",
-                "","Lakshmamma","9711223344","Byadagi, Haveri",200,true),
+                "","Lakshmamma","9711223344","Byadagi, Haveri",0.0,0.0,200,true),
             Product("d5","Sandalwood Elephant","ಶ್ರೀಗಂಧದ ಆನೆ","चंदन हाथी","சந்தன யானை",
                 3500.0,"Intricately carved sandalwood elephant figurine","ಶ್ರೀಗಂಧದ ಕೆತ್ತನೆಯ ಆನೆ","WOODCRAFT",
-                "","Venkatesh Shilpi","9632587410","Mysuru, Karnataka",8,true),
+                "","Venkatesh Shilpi","9632587410","Mysuru, Karnataka",0.0,0.0,8,true),
             Product("d6","Navratna Necklace","ನವರತ್ನ ಹಾರ","नवरत्न नेकलेस","நவரத்ன நெಕ್ಲஸ்",
                 2200.0,"Handcrafted Navratna necklace with semi-precious stones","ನವರತ್ನ ಹಾರ - ಹರಳುಗಳಿಂದ ಕೂಡಿದೆ","JEWELRY",
-                "","Parvathi Jewels","8800990011","Hassan, Karnataka",15,true),
+                "","Parvathi Jewels","8800990011","Hassan, Karnataka",0.0,0.0,15,true),
         )
         try {
             val batch = db.batch()
