@@ -10,51 +10,56 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0dp">
+        android:background="@drawable/bg_home_header"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
+        app:elevation="8dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/bg_home_header"
+            android:background="@android:color/transparent"
             app:title="@string/app_name"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:titleTextColor="@android:color/white"
-            app:subtitleTextColor="#E0E0E0"
+            app:subtitleTextColor="#F0F0F0"
             app:subtitle="@string/tagline" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/bg_home_header"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="14dp">
+            android:background="@android:color/transparent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="24dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fresh village picks"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:fontFamily="@font/poppins_bold"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Handmade goods, local food, and artisan finds near you"
                 android:textColor="#F5EBDD"
-                android:textSize="13sp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="10dp" />
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp" />
 
+            <!-- Languages -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
-                android:paddingVertical="4dp">
+                android:clipToPadding="false"
+                android:paddingEnd="16dp">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroupLanguages"
@@ -65,18 +70,22 @@
 
             </HorizontalScrollView>
 
+            <!-- Categories -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
-                android:paddingTop="6dp">
+                android:clipToPadding="false"
+                android:layout_marginTop="12dp"
+                android:paddingEnd="16dp">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroupCategories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:singleSelection="true"
-                    app:selectionRequired="true"/>
+                    app:selectionRequired="true"
+                    app:chipSpacingHorizontal="8dp"/>
 
             </HorizontalScrollView>
         </LinearLayout>

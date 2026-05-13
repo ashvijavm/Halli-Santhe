@@ -287,13 +287,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAppLocale(lang: String) {
-        val locale = Locale(lang)
-        Locale.setDefault(locale)
-        val config = resources.configuration
-        config.setLocale(locale)
-        @Suppress("DEPRECATION")
-        resources.updateConfiguration(config, resources.displayMetrics)
-        recreate()
+        val appLocale = androidx.core.os.LocaleListCompat.forLanguageTags(lang)
+        androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(appLocale)
     }
 
     override fun onResume() {

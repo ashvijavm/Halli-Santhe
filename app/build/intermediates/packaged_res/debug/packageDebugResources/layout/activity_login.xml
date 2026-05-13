@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:hint="Full Name"
         android:visibility="gone"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_marginBottom="12dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_marginBottom="12dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmail"
@@ -68,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         app:passwordToggleEnabled="true"
         android:layout_marginBottom="24dp">
         <com.google.android.material.textfield.TextInputEditText
@@ -92,7 +92,7 @@
         android:layout_height="56dp"
         android:text="Login"
         android:fontFamily="@font/poppins_bold"
-        app:cornerRadius="8dp"
+        app:cornerRadius="16dp"
         app:backgroundTint="@color/market_primary"
         android:layout_marginBottom="12dp"/>
 
@@ -101,10 +101,10 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="Create Account"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         app:strokeColor="@color/market_primary"
         android:textColor="@color/market_primary"
-        app:cornerRadius="8dp"
+        app:cornerRadius="16dp"
         android:layout_marginBottom="12dp"/>
 
     <com.google.android.material.button.MaterialButton
@@ -112,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Browse as Guest"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/Widget.Material3.Button.TextButton"
         android:textColor="@color/text_secondary"/>
 
 </LinearLayout>

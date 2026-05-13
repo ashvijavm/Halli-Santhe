@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-56:12
-INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-56:12
-INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-56:12
-INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-56:12
+ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-65:12
+INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-65:12
+INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-65:12
+INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:2:1-65:12
 MERGED from [androidx.databinding:viewbinding:8.11.1] /Users/pavan/.gradle/caches/9.2.1/transforms/28dd659338ad3e4ccad5b984233d3d44/transformed/jetified-viewbinding-8.11.1/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-common:2.7.6] /Users/pavan/.gradle/caches/9.2.1/transforms/e7bca87e4dd8133af25c7019a5d26c07/transformed/navigation-common-2.7.6/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] /Users/pavan/.gradle/caches/9.2.1/transforms/3b4fdaa0b2cf6981811d0f7d783bc7fe/transformed/navigation-common-ktx-2.7.6/AndroidManifest.xml:2:1-7:12
@@ -136,8 +136,8 @@ ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:9:
 	android:name
 		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:9:22-66
 application
-ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:11:5-54:19
-INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:11:5-54:19
+ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:11:5-63:19
+INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:11:5-63:19
 MERGED from [com.google.android.material:material:1.11.0] /Users/pavan/.gradle/caches/9.2.1/transforms/92aa0fea6246726e5f307e7120180eea/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] /Users/pavan/.gradle/caches/9.2.1/transforms/92aa0fea6246726e5f307e7120180eea/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/pavan/.gradle/caches/9.2.1/transforms/caf07aed114ed3dbb3031c70f54d5fb4/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -266,6 +266,20 @@ ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:49
 		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:51:13-37
 	android:name
 		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:50:13-52
+service#androidx.appcompat.app.AppLocalesMetadataHolderService
+ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:54:9-61:19
+	android:enabled
+		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:56:13-36
+	android:exported
+		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:57:13-37
+	android:name
+		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:55:13-82
+meta-data#autoStoreLocales
+ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:58:13-60:40
+	android:value
+		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:60:17-37
+	android:name
+		ADDED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml:59:17-48
 uses-sdk
 INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/pavan/Desktop/Halli-Santhe/app/src/main/AndroidManifest.xml
