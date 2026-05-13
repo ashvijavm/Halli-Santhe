@@ -1,7 +1,0 @@
-com.hallisanthe.test.app-jetified-core-1.5.0-0 C:\Users\User\.gradle\caches\8.13\transforms\26106f7a46abcccbfe379cf2caa28e61\transformed\jetified-core-1.5.0\res
-com.hallisanthe.test.app-jetified-annotation-experimental-1.3.0-1 C:\Users\User\.gradle\caches\8.13\transforms\adb988ce173d5b61f2b4facdf89be976\transformed\jetified-annotation-experimental-1.3.0\res
-com.hallisanthe.test.app-androidTest-2 C:\Users\User\Downloads\HalliSanthe\HalliSanthe\app\build\generated\res\resValues\androidTest\debug
-com.hallisanthe.test.app-updated_navigation_xml-3 C:\Users\User\Downloads\HalliSanthe\HalliSanthe\app\build\generated\updated_navigation_xml\debugAndroidTest
-com.hallisanthe.test.app-mergeDebugAndroidTestResources-4 C:\Users\User\Downloads\HalliSanthe\HalliSanthe\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
-com.hallisanthe.test.app-mergeDebugAndroidTestResources-5 C:\Users\User\Downloads\HalliSanthe\HalliSanthe\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
-com.hallisanthe.test.app-debugAndroidTest-6 C:\Users\User\Downloads\HalliSanthe\HalliSanthe\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
