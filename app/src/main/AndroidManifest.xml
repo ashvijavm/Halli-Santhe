@@ -46,6 +46,11 @@
             android:name=".ui.home.LoginActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".ui.home.ProfileActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.home.MainActivity" />
+
     </application>
 
 </manifest>

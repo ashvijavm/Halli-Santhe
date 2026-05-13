@@ -30,6 +30,7 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
     val selectedCategory: LiveData<String> = _selectedCategory
 
     private var currentQuery = ""
+    private val wishlistIds = mutableSetOf<String>()
 
     init {
         loadProducts("ALL")
@@ -43,7 +44,7 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
             _error.value = null
             when (val result = repo.getProducts(category)) {
                 is Result.Success -> {
-                    _products.value = result.data
+                    _products.value = applyWishlistState(result.data)
                     _isEmpty.value = result.data.isEmpty()
                 }
                 is Result.Error -> {
@@ -60,9 +61,13 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
         val currentList = _products.value?.toMutableList() ?: return
         val index = currentList.indexOfFirst { it.id == product.id }
         if (index != -1) {
+            if (product.isWishlisted) {
+                wishlistIds.remove(product.id)
+            } else {
+                wishlistIds.add(product.id)
+            }
             currentList[index] = currentList[index].copy(isWishlisted = !product.isWishlisted)
             _products.value = currentList
-            // In a real app, you'd update this in Firestore/Room here
         }
     }
 
@@ -73,7 +78,7 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
             _loading.value = true
             when (val result = repo.searchProducts(query)) {
                 is Result.Success -> {
-                    _products.value = result.data
+                    _products.value = applyWishlistState(result.data)
                     _isEmpty.value = result.data.isEmpty()
                 }
                 is Result.Error -> _error.value = result.message
@@ -89,4 +94,10 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun refresh() = loadProducts(_selectedCategory.value ?: "ALL")
+
+    private fun applyWishlistState(products: List<Product>): List<Product> {
+        return products.map { product ->
+            product.copy(isWishlisted = product.isWishlisted || wishlistIds.contains(product.id))
+        }
+    }
 }

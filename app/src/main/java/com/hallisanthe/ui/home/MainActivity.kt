@@ -112,19 +112,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         viewModel.products.observe(this) { products ->
-            if (showingWishlist) {
-                adapter.submitList(products.filter { it.isWishlisted })
-            } else {
-                adapter.submitList(products)
-            }
+            val visibleProducts = if (showingWishlist) products.filter { it.isWishlisted } else products
+            adapter.submitList(visibleProducts)
+            binding.layoutEmpty.visibility = if (visibleProducts.isEmpty()) View.VISIBLE else View.GONE
+            binding.rvProducts.visibility = if (visibleProducts.isEmpty()) View.GONE else View.VISIBLE
         }
         viewModel.loading.observe(this) { loading ->
             binding.swipeRefresh.isRefreshing = loading
             binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
         }
         viewModel.isEmpty.observe(this) { empty ->
-            binding.layoutEmpty.visibility = if (empty) View.VISIBLE else View.GONE
-            binding.rvProducts.visibility = if (empty) View.GONE else View.VISIBLE
+            if (!showingWishlist) {
+                binding.layoutEmpty.visibility = if (empty) View.VISIBLE else View.GONE
+                binding.rvProducts.visibility = if (empty) View.GONE else View.VISIBLE
+            }
         }
         viewModel.error.observe(this) { error ->
             error?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
@@ -165,12 +166,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_wishlist -> {
                     showingWishlist = true
-                    viewModel.refresh()
+                    viewModel.loadProducts("ALL")
                     Toast.makeText(this, "Showing Wishlist ❤️", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.nav_profile -> {
-                    showAccountOptions()
+                    startActivity(Intent(this, ProfileActivity::class.java))
                     false
                 }
                 else -> false
