@@ -55,7 +55,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductAdapter { product -> openDetail(product) }
+        adapter = ProductAdapter(
+            onWishlistClick = { product -> viewModel.toggleWishlist(product) },
+            onClick = { product -> openDetail(product) }
+        )
         binding.rvProducts.apply {
             layoutManager = GridLayoutManager(this@MainActivity, 2)
             adapter = this@MainActivity.adapter
