@@ -2,6 +2,7 @@ package com.hallisanthe.repository
 
 import android.content.Context
 import android.net.Uri
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
@@ -25,6 +26,7 @@ sealed class Result<out T> {
 
 class ProductRepository(private val context: Context) {
 
+    private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val localDb = AppDatabase.getInstance(context)
@@ -54,6 +56,24 @@ class ProductRepository(private val context: Context) {
                     localDb.productDao().getByCategory(category)
                 if (cached.isNotEmpty()) Result.Success(cached)
                 else Result.Error(e.message ?: "Failed to load products")
+            }
+        }
+
+    suspend fun getMyProducts(): Result<List<Product>> =
+        withContext(Dispatchers.IO) {
+            val uid = auth.currentUser?.uid ?: return@withContext Result.Error("Please login first")
+            try {
+                val snapshot = db.collection(COLLECTION)
+                    .whereEqualTo("ownerUid", uid)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
+                    .get()
+                    .await()
+                val products = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(Product::class.java)?.copy(id = doc.id)
+                }
+                Result.Success(products)
+            } catch (e: Exception) {
+                Result.Error(e.message ?: "Failed to load your products")
             }
         }
 
@@ -104,7 +124,8 @@ class ProductRepository(private val context: Context) {
                 val productWithImage = product.copy(
                     id = UUID.randomUUID().toString(),
                     imageUrl = downloadUrl,
-                    timestamp = System.currentTimeMillis()
+                    timestamp = System.currentTimeMillis(),
+                    ownerUid = auth.currentUser?.uid.orEmpty()
                 )
                 db.collection(COLLECTION)
                     .document(productWithImage.id)
@@ -139,7 +160,8 @@ class ProductRepository(private val context: Context) {
             try {
                 val p = product.copy(
                     id = UUID.randomUUID().toString(),
-                    timestamp = System.currentTimeMillis()
+                    timestamp = System.currentTimeMillis(),
+                    ownerUid = auth.currentUser?.uid.orEmpty()
                 )
                 db.collection(COLLECTION).document(p.id).set(p).await()
                 localDb.productDao().insert(p)
@@ -179,4 +201,48 @@ class ProductRepository(private val context: Context) {
             localDb.productDao().insertAll(demo)
         }
     }
+
+    suspend fun getWishlistIds(): Set<String> =
+        withContext(Dispatchers.IO) {
+            val uid = auth.currentUser?.uid ?: return@withContext emptySet()
+            try {
+                db.collection("users")
+                    .document(uid)
+                    .collection("wishlist")
+                    .get()
+                    .await()
+                    .documents
+                    .map { it.id }
+                    .toSet()
+            } catch (_: Exception) {
+                emptySet()
+            }
+        }
+
+    suspend fun setWishlisted(product: Product, wishlisted: Boolean): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            val uid = auth.currentUser?.uid ?: return@withContext Result.Error("Please login to sync wishlist")
+            try {
+                val ref = db.collection("users")
+                    .document(uid)
+                    .collection("wishlist")
+                    .document(product.id)
+                if (wishlisted) {
+                    ref.set(
+                        mapOf(
+                            "productId" to product.id,
+                            "name" to product.name,
+                            "imageUrl" to product.imageUrl,
+                            "price" to product.price,
+                            "timestamp" to System.currentTimeMillis()
+                        )
+                    ).await()
+                } else {
+                    ref.delete().await()
+                }
+                Result.Success(Unit)
+            } catch (e: Exception) {
+                Result.Error(e.message ?: "Failed to update wishlist")
+            }
+        }
 }

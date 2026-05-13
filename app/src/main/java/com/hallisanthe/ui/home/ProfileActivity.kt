@@ -5,14 +5,20 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.hallisanthe.databinding.ActivityProfileBinding
+import com.hallisanthe.repository.ProductRepository
+import com.hallisanthe.repository.Result
+import kotlinx.coroutines.launch
 
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
     private val auth = FirebaseAuth.getInstance()
+    private val repo by lazy { ProductRepository(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +74,30 @@ class ProfileActivity : AppCompatActivity() {
             if (user == null) {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
-                Toast.makeText(this, "Fetching your listed items...", Toast.LENGTH_SHORT).show()
+                showMyProducts()
+            }
+        }
+    }
+
+    private fun showMyProducts() {
+        lifecycleScope.launch {
+            Toast.makeText(this@ProfileActivity, "Fetching your listed items...", Toast.LENGTH_SHORT).show()
+            when (val result = repo.getMyProducts()) {
+                is Result.Success -> {
+                    val products = result.data
+                    val items = if (products.isEmpty()) {
+                        arrayOf("No products listed yet")
+                    } else {
+                        products.map { "${it.name} - Rs ${String.format("%.0f", it.price)}" }.toTypedArray()
+                    }
+                    AlertDialog.Builder(this@ProfileActivity)
+                        .setTitle("My Listed Products")
+                        .setItems(items, null)
+                        .setPositiveButton("OK", null)
+                        .show()
+                }
+                is Result.Error -> Toast.makeText(this@ProfileActivity, result.message, Toast.LENGTH_LONG).show()
+                else -> {}
             }
         }
     }

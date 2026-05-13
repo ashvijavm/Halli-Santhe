@@ -44,6 +44,7 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
             _error.value = null
             when (val result = repo.getProducts(category)) {
                 is Result.Success -> {
+                    syncWishlistIds()
                     _products.value = applyWishlistState(result.data)
                     _isEmpty.value = result.data.isEmpty()
                 }
@@ -61,13 +62,27 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
         val currentList = _products.value?.toMutableList() ?: return
         val index = currentList.indexOfFirst { it.id == product.id }
         if (index != -1) {
-            if (product.isWishlisted) {
-                wishlistIds.remove(product.id)
-            } else {
+            val shouldWishlist = !product.isWishlisted
+            if (shouldWishlist) {
                 wishlistIds.add(product.id)
+            } else {
+                wishlistIds.remove(product.id)
             }
-            currentList[index] = currentList[index].copy(isWishlisted = !product.isWishlisted)
+            currentList[index] = currentList[index].copy(isWishlisted = shouldWishlist)
             _products.value = currentList
+
+            viewModelScope.launch {
+                when (val result = repo.setWishlisted(product, shouldWishlist)) {
+                    is Result.Error -> {
+                        _error.value = result.message
+                        if (shouldWishlist) wishlistIds.remove(product.id) else wishlistIds.add(product.id)
+                        _products.value = currentList.toMutableList().also {
+                            it[index] = it[index].copy(isWishlisted = product.isWishlisted)
+                        }
+                    }
+                    else -> {}
+                }
+            }
         }
     }
 
@@ -78,6 +93,7 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
             _loading.value = true
             when (val result = repo.searchProducts(query)) {
                 is Result.Success -> {
+                    syncWishlistIds()
                     _products.value = applyWishlistState(result.data)
                     _isEmpty.value = result.data.isEmpty()
                 }
@@ -94,6 +110,11 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun refresh() = loadProducts(_selectedCategory.value ?: "ALL")
+
+    private suspend fun syncWishlistIds() {
+        wishlistIds.clear()
+        wishlistIds.addAll(repo.getWishlistIds())
+    }
 
     private fun applyWishlistState(products: List<Product>): List<Product> {
         return products.map { product ->

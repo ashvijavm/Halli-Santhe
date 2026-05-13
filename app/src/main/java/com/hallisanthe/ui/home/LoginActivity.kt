@@ -7,12 +7,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 import com.hallisanthe.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
     private var isLoginMode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         if (isLoginMode) {
             binding.tilName.visibility = View.GONE
             binding.btnLogin.text = "Login"
-            binding.btnRegister.text = "Switch to Register"
+            binding.btnRegister.text = "Create Account"
         } else {
             binding.tilName.visibility = View.VISIBLE
             binding.btnLogin.text = "Switch to Login"
@@ -64,14 +66,14 @@ class LoginActivity : AppCompatActivity() {
 
         binding.progressLogin.visibility = View.VISIBLE
         binding.btnLogin.isEnabled = false
+        binding.btnRegister.isEnabled = false
 
         auth.signInWithEmailAndPassword(email, pass)
             .addOnSuccessListener { 
                 goToMain() 
             }
             .addOnFailureListener { e ->
-                binding.progressLogin.visibility = View.GONE
-                binding.btnLogin.isEnabled = true
+                setLoading(false)
                 Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
@@ -92,25 +94,53 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.progressLogin.visibility = View.VISIBLE
+        binding.btnLogin.isEnabled = false
         binding.btnRegister.isEnabled = false
 
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnSuccessListener { result ->
-                // Update display name
                 val profileUpdates = UserProfileChangeRequest.Builder()
                     .setDisplayName(name)
                     .build()
                 
                 result.user?.updateProfile(profileUpdates)
-                    ?.addOnCompleteListener {
-                        goToMain()
+                    ?.addOnCompleteListener { profileTask ->
+                        if (!profileTask.isSuccessful) {
+                            setLoading(false)
+                            Toast.makeText(this, "Profile update failed: ${profileTask.exception?.message}", Toast.LENGTH_LONG).show()
+                            return@addOnCompleteListener
+                        }
+
+                        val uid = result.user?.uid ?: return@addOnCompleteListener
+                        val profile = mapOf(
+                            "uid" to uid,
+                            "displayName" to name,
+                            "email" to email,
+                            "createdAt" to System.currentTimeMillis()
+                        )
+                        db.collection("users").document(uid).set(profile)
+                            .addOnSuccessListener { goToMain() }
+                            .addOnFailureListener { e ->
+                                setLoading(false)
+                                Toast.makeText(this, "Account created, profile sync failed: ${e.message}", Toast.LENGTH_LONG).show()
+                                goToMain()
+                            }
+                    }
+                    ?: run {
+                        setLoading(false)
+                        Toast.makeText(this, "Registration failed: user was not created", Toast.LENGTH_LONG).show()
                     }
             }
             .addOnFailureListener { e ->
-                binding.progressLogin.visibility = View.GONE
-                binding.btnRegister.isEnabled = true
+                setLoading(false)
                 Toast.makeText(this, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
             }
+    }
+
+    private fun setLoading(loading: Boolean) {
+        binding.progressLogin.visibility = if (loading) View.VISIBLE else View.GONE
+        binding.btnLogin.isEnabled = !loading
+        binding.btnRegister.isEnabled = !loading
     }
 
     private fun goToMain() {
