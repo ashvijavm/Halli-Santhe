@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hallisanthe.databinding.ActivityLoginBinding
@@ -74,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 setLoading(false)
-                Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Login failed: ${friendlyAuthMessage(e)}", Toast.LENGTH_LONG).show()
             }
     }
 
@@ -133,7 +134,7 @@ class LoginActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 setLoading(false)
-                Toast.makeText(this, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Registration failed: ${friendlyAuthMessage(e)}", Toast.LENGTH_LONG).show()
             }
     }
 
@@ -141,6 +142,16 @@ class LoginActivity : AppCompatActivity() {
         binding.progressLogin.visibility = if (loading) View.VISIBLE else View.GONE
         binding.btnLogin.isEnabled = !loading
         binding.btnRegister.isEnabled = !loading
+    }
+
+    private fun friendlyAuthMessage(error: Exception): String {
+        val code = (error as? FirebaseAuthException)?.errorCode.orEmpty()
+        return when {
+            code == "ERROR_OPERATION_NOT_ALLOWED" ||
+                error.message?.contains("sign-in provider is disabled", ignoreCase = true) == true ->
+                "Email/Password sign-in is disabled in Firebase Console. Enable it under Authentication > Sign-in method."
+            else -> error.message ?: "Please try again"
+        }
     }
 
     private fun goToMain() {
