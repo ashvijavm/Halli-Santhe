@@ -117,20 +117,27 @@ class ProductRepository(private val context: Context) {
         withContext(Dispatchers.IO) {
             try {
                 val file = getFileFromUri(imageUri) ?: throw Exception("Could not process image")
+                if (file.length() == 0L) throw Exception("Selected image is empty or inaccessible")
                 
-                val compressed = Compressor.compress(context, file) {
-                    resolution(800, 800)
-                    quality(75)
+                var compressed = file
+                try {
+                    compressed = Compressor.compress(context, file) {
+                        resolution(800, 800)
+                        quality(75)
+                    }
+                } catch (e: Exception) {
+                    // Fallback to original file if compression fails
                 }
+                
+                if (compressed.length() == 0L) throw Exception("Image file is empty after processing")
 
                 val imageRef = storage.reference.child("products/${UUID.randomUUID()}.jpg")
                 
-                // Using continueWithTask is more robust for getting download URL immediately after upload
-                val downloadUrl = imageRef.putFile(Uri.fromFile(compressed))
-                    .continueWithTask { task ->
-                        if (!task.isSuccessful) task.exception?.let { throw it }
-                        imageRef.downloadUrl
-                    }.await().toString()
+                // Use standard await() for putFile to ensure upload is fully complete
+                imageRef.putFile(Uri.fromFile(compressed)).await()
+                
+                // Then fetch the download URL
+                val downloadUrl = imageRef.downloadUrl.await().toString()
 
                 val productWithImage = product.copy(
                     id = UUID.randomUUID().toString(),
@@ -145,6 +152,7 @@ class ProductRepository(private val context: Context) {
 
                 localDb.productDao().insert(productWithImage)
                 if (file.exists()) file.delete()
+                if (compressed.exists() && compressed != file) compressed.delete()
                 
                 Result.Success(productWithImage.id)
             } catch (e: Exception) {
