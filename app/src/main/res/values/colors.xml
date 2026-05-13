@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Village market palette -->
-    <color name="market_primary">#1F6F5B</color>
-    <color name="market_primary_dark">#144E40</color>
-    <color name="market_primary_light">#DDF1E9</color>
+    <color name="market_primary">#F57C00</color>
+    <color name="market_primary_dark">#E65100</color>
+    <color name="market_primary_light">#FFE0B2</color>
 
-    <color name="market_accent">#F2B84B</color>
-    <color name="market_accent_vibrant">#D77A32</color>
+    <color name="market_accent">#FFCA28</color>
+    <color name="market_accent_vibrant">#FF8F00</color>
 
     <color name="market_blue">#3574A6</color>
     <color name="market_green">#26845D</color>
@@ -27,9 +27,9 @@
     <color name="whatsapp_green">#25D366</color>
 
     <!-- Compatibility aliases -->
-    <color name="market_orange">#1F6F5B</color>
-    <color name="market_orange_dark">#144E40</color>
-    <color name="colorPrimary">#1F6F5B</color>
-    <color name="colorPrimaryDark">#144E40</color>
-    <color name="colorAccent">#F2B84B</color>
+    <color name="market_orange">#F57C00</color>
+    <color name="market_orange_dark">#E65100</color>
+    <color name="colorPrimary">#F57C00</color>
+    <color name="colorPrimaryDark">#E65100</color>
+    <color name="colorAccent">#FFCA28</color>
 </resources>

@@ -38,7 +38,7 @@
                 android:layout_height="220dp"
                 android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="@color/surface_warm"
-                app:cardCornerRadius="8dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
                 app:strokeColor="@color/market_primary"
                 app:strokeWidth="1dp">
@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Product Name *"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/market_primary"
                 app:hintTextColor="@color/market_primary"
                 android:layout_marginBottom="12dp">
@@ -124,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="ಉತ್ಪನ್ನದ ಹೆಸರು (Kannada)"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_marginBottom="12dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etProductNameKn"
@@ -136,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="उत्पाद का नाम (Hindi)"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_marginBottom="12dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etProductNameHi"
@@ -148,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="பொருளின் பெயர் (Tamil)"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_marginBottom="12dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etProductNameTa"
@@ -170,7 +170,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:hint="Price (₹) *"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_marginEnd="8dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPrice"
@@ -185,7 +185,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:hint="Stock Qty"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etStock"
                         android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Category *"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_marginBottom="12dp">
                 <AutoCompleteTextView
                     android:id="@+id/actvCategory"
@@ -217,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Description"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="20dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDescription"
@@ -244,7 +244,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Your Name *"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="12dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSellerName"
@@ -258,7 +258,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="12dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSellerPhone"
@@ -272,7 +272,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location (Village / Town)"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="12dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSellerLocation"
@@ -284,13 +284,13 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGetLocation"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:text="📍 Capture Map Location"
                 android:textColor="@color/market_primary"
                 app:strokeColor="@color/market_primary"
-                app:cornerRadius="8dp"
+                app:cornerRadius="16dp"
                 android:layout_marginBottom="32dp"/>
 
             <ProgressBar
@@ -310,7 +310,7 @@
                 android:textSize="18sp"
                 android:fontFamily="@font/poppins_bold"
                 app:backgroundTint="@color/market_primary"
-                app:cornerRadius="8dp"
+                app:cornerRadius="16dp"
                 android:layout_marginBottom="40dp"/>
 
         </LinearLayout>

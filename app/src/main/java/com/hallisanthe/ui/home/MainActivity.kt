@@ -134,8 +134,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setColorSchemeResources(
-            R.color.market_primary, R.color.market_green,
-            R.color.market_blue, R.color.market_red
+            R.color.market_primary, R.color.market_accent,
+            R.color.market_primary_dark, R.color.market_accent_vibrant
         )
         binding.swipeRefresh.setOnRefreshListener { viewModel.refresh() }
     }
