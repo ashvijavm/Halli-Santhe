@@ -24,7 +24,7 @@ interface ProductDao {
     suspend fun clearAll()
 }
 
-@Database(entities = [Product::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 

@@ -73,7 +73,18 @@ class ProductRepository(private val context: Context) {
                 }
                 Result.Success(products)
             } catch (e: Exception) {
-                Result.Error(e.message ?: "Failed to load your products")
+                try {
+                    val snapshot = db.collection(COLLECTION)
+                        .whereEqualTo("ownerUid", uid)
+                        .get()
+                        .await()
+                    val products = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(Product::class.java)?.copy(id = doc.id)
+                    }.sortedByDescending { it.timestamp }
+                    Result.Success(products)
+                } catch (_: Exception) {
+                    Result.Error(e.message ?: "Failed to load your products")
+                }
             }
         }
 

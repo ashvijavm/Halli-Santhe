@@ -29,11 +29,15 @@ color whatsapp_green
 color white
 drawable bg_avatar_circle
 drawable bg_category_badge
+drawable bg_header_panel
 drawable bg_home_header
 drawable bg_photo_picker
+drawable bg_price_pill
+drawable bg_product_overlay
 drawable bg_soft_panel
 drawable bg_splash
 drawable bg_toolbar
+drawable bg_wishlist_button
 drawable ic_add
 drawable ic_categories
 drawable ic_home

@@ -22,7 +22,7 @@ data class Product(
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
     val stock: Int = 0,
-    val isAvailable: Boolean = true,
+    val available: Boolean = true,
     val timestamp: Long = System.currentTimeMillis(),
     val ownerUid: String = "", // UID of the user who uploaded it
     var isWishlisted: Boolean = false
