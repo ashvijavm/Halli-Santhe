@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">हल्ली-संते</string>
+    <string name="tagline">गाँव की बाज़ार, डिजिटल दुनिया</string>
+    <string name="vocal_for_local">#वोकल_फॉर_लोकल 🇮🇳</string>
+    <string name="sell_product">उत्पाद बेचें</string>
+    <string name="upload_product">अपना उत्पाद सूचीबद्ध करें</string>
+    <string name="list_product">📦 मेरा उत्पाद सूचीबद्ध करें</string>
+    <string name="search_hint">उत्पाद खोजें…</string>
+    <string name="enquire_whatsapp">💬 WhatsApp</string>
+    <string name="call">📞 कॉल करें</string>
+    <string name="share">साझा करें</string>
+    <string name="enquiry_message">नमस्ते! हल्ली-संते पर आपका उत्पाद "%1$s" देखा। क्या यह अभी उपलब्ध है? 🙏</string>
+    <string name="empty_state_title">कोई उत्पाद नहीं!</string>
+    <string name="empty_state_desc">पहले कारीगर बनें और अपना उत्पाद सूचीबद्ध करें।</string>
+    <string name="load_demo">डेमो उत्पाद लोड करें</string>
+    <string name="language">भाषा</string>
+</resources>

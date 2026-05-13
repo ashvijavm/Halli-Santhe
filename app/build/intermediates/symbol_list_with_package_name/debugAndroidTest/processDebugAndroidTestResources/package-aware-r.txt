@@ -1,0 +1,3 @@
+com.hallisanthe.test
+style WhiteBackgroundDialogTheme
+style WhiteBackgroundTheme

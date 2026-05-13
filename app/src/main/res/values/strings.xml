@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Halli-Santhe</string>
+    <string name="tagline">Village Market, Digital World</string>
+    <string name="vocal_for_local">#VocalForLocal 🇮🇳</string>
+    <string name="sell_product">Sell Product</string>
+    <string name="upload_product">List Your Product</string>
+    <string name="list_product">📦 List My Product</string>
+    <string name="search_hint">Search products, crafts…</string>
+    <string name="enquire_whatsapp">💬 WhatsApp</string>
+    <string name="call">📞 Call</string>
+    <string name="share">Share</string>
+    <string name="enquiry_message">Hello! I am interested in your product "%1$s" listed on Halli-Santhe. Is it still available? Please share more details. 🙏</string>
+    <string name="empty_state_title">No Products Yet!</string>
+    <string name="empty_state_desc">Be the first artisan to list your product.\nTap the button below to load demo products.</string>
+    <string name="load_demo">Load Demo Products</string>
+    <string name="language">Language</string>
+
+    <string name="menu_search">Search</string>
+    <string name="menu_language">Language</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_account">Account</string>
+</resources>

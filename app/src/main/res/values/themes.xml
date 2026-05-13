@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.HalliSanthe" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/market_orange</item>
+        <item name="colorPrimaryVariant">@color/market_orange_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/market_green</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="Theme.HalliSanthe.Splash" parent="Theme.HalliSanthe">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">@color/market_orange_dark</item>
+    </style>
+
+    <style name="Theme.HalliSanthe.Detail" parent="Theme.HalliSanthe">
+        <item name="android:statusBarColor">@color/market_orange_dark</item>
+    </style>
+
+</resources>
