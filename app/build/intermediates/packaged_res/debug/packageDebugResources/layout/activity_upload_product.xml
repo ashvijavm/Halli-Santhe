@@ -28,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:paddingBottom="28dp">
 
             <!-- Image Picker -->
             <com.google.android.material.card.MaterialCardView
@@ -36,10 +37,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_marginBottom="20dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_warm"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
                 app:strokeColor="@color/market_primary"
-                app:strokeWidth="2dp">
+                app:strokeWidth="1dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -50,7 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:background="#EEEEEE"/>
+                        android:background="@drawable/bg_photo_picker"/>
 
                     <LinearLayout
                         android:id="@+id/tvPickImage"
@@ -59,11 +61,14 @@
                         android:layout_gravity="center"
                         android:orientation="vertical"
                         android:gravity="center">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="📷"
-                            android:textSize="48sp"/>
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:src="@drawable/ic_add"
+                            android:tint="@color/market_primary"
+                            android:background="@drawable/bg_avatar_circle"
+                            android:padding="14dp"
+                            android:contentDescription="Add product photo"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -98,7 +103,7 @@
                 android:id="@+id/btnToggleLanguages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ Add name in other languages (Optional)"
+                android:text="Add name in other languages (Optional)"
                 android:textColor="@color/market_primary"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_bold"
@@ -285,7 +290,7 @@
                 android:text="📍 Capture Map Location"
                 android:textColor="@color/market_primary"
                 app:strokeColor="@color/market_primary"
-                app:cornerRadius="12dp"
+                app:cornerRadius="8dp"
                 android:layout_marginBottom="32dp"/>
 
             <ProgressBar
@@ -305,7 +310,7 @@
                 android:textSize="18sp"
                 android:fontFamily="@font/poppins_bold"
                 app:backgroundTint="@color/market_primary"
-                app:cornerRadius="16dp"
+                app:cornerRadius="8dp"
                 android:layout_marginBottom="40dp"/>
 
         </LinearLayout>

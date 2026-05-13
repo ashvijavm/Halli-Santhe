@@ -5,14 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="32dp"
+    android:padding="28dp"
     android:background="@color/bg_light">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🛒"
-        android:textSize="80sp"
+    <ImageView
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:src="@drawable/ic_market"
+        android:tint="@color/market_primary"
+        android:background="@drawable/bg_avatar_circle"
+        android:padding="18dp"
+        android:contentDescription="@string/app_name"
         android:layout_marginBottom="16dp"/>
 
     <TextView
@@ -27,10 +30,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Artisans Marketplace"
+        android:text="Local crafts, food, and village makers"
         android:textSize="14sp"
         android:textColor="@color/text_secondary"
-        android:layout_marginBottom="24dp"/>
+        android:gravity="center"
+        android:layout_marginBottom="28dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilName"
@@ -87,7 +91,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="Login"
-        app:cornerRadius="12dp"
+        android:fontFamily="@font/poppins_bold"
+        app:cornerRadius="8dp"
         app:backgroundTint="@color/market_primary"
         android:layout_marginBottom="12dp"/>
 
@@ -99,7 +104,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:strokeColor="@color/market_primary"
         android:textColor="@color/market_primary"
-        app:cornerRadius="12dp"
+        app:cornerRadius="8dp"
         android:layout_marginBottom="12dp"/>
 
     <com.google.android.material.button.MaterialButton

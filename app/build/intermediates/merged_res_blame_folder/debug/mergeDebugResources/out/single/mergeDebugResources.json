@@ -12,6 +12,14 @@
         "source": "com.hallisanthe.app-main-64:/layout/activity_splash.xml"
     },
     {
+        "merged": "com.hallisanthe.app-debug-62:/drawable_bg_home_header.xml.flat",
+        "source": "com.hallisanthe.app-main-64:/drawable/bg_home_header.xml"
+    },
+    {
+        "merged": "com.hallisanthe.app-debug-62:/drawable_bg_avatar_circle.xml.flat",
+        "source": "com.hallisanthe.app-main-64:/drawable/bg_avatar_circle.xml"
+    },
+    {
         "merged": "com.hallisanthe.app-debug-62:/layout_activity_login.xml.flat",
         "source": "com.hallisanthe.app-main-64:/layout/activity_login.xml"
     },
@@ -52,6 +60,10 @@
         "source": "com.hallisanthe.app-main-64:/mipmap-hdpi/ic_launcher.xml"
     },
     {
+        "merged": "com.hallisanthe.app-debug-62:/drawable_bg_photo_picker.xml.flat",
+        "source": "com.hallisanthe.app-main-64:/drawable/bg_photo_picker.xml"
+    },
+    {
         "merged": "com.hallisanthe.app-debug-62:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
         "source": "com.hallisanthe.app-main-64:/mipmap-xxxhdpi/ic_launcher_round.xml"
     },
@@ -62,6 +74,10 @@
     {
         "merged": "com.hallisanthe.app-debug-62:/drawable_ic_person.xml.flat",
         "source": "com.hallisanthe.app-main-64:/drawable/ic_person.xml"
+    },
+    {
+        "merged": "com.hallisanthe.app-debug-62:/drawable_bg_soft_panel.xml.flat",
+        "source": "com.hallisanthe.app-main-64:/drawable/bg_soft_panel.xml"
     },
     {
         "merged": "com.hallisanthe.app-debug-62:/menu_menu_main.xml.flat",

@@ -21,11 +21,17 @@ color market_primary_dark
 color market_primary_light
 color market_purple
 color market_red
+color surface_muted
+color surface_warm
 color text_primary
 color text_secondary
 color whatsapp_green
 color white
+drawable bg_avatar_circle
 drawable bg_category_badge
+drawable bg_home_header
+drawable bg_photo_picker
+drawable bg_soft_panel
 drawable bg_splash
 drawable bg_toolbar
 drawable ic_add

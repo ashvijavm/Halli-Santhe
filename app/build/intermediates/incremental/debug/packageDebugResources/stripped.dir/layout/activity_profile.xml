@@ -36,8 +36,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
+                app:cardBackgroundColor="@color/surface_warm"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/divider"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,8 +53,7 @@
                         android:id="@+id/tvProfileInitial"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:background="@drawable/bg_category_badge"
-                        android:backgroundTint="@color/market_primary_light"
+                        android:background="@drawable/bg_avatar_circle"
                         android:gravity="center"
                         android:text="A"
                         android:textColor="@color/market_primary"
@@ -94,8 +96,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
+                app:cardBackgroundColor="@color/surface_warm"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/divider"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:text="Logout"
-                app:cornerRadius="12dp"
+                app:cornerRadius="8dp"
                 app:backgroundTint="@color/market_red"
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppins_bold"/>
@@ -157,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:text="Login / Register"
-                app:cornerRadius="12dp"
+                app:cornerRadius="8dp"
                 app:backgroundTint="@color/market_primary"
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppins_bold"
