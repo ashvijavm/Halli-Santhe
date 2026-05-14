@@ -67,16 +67,21 @@ class ProductDetailActivity : AppCompatActivity() {
         binding.tvSellerName.text = "👤 $sellerName"
         binding.tvSellerLocation.text = "📍 $sellerLoc"
         
-        if (lat != 0.0 && lng != 0.0) {
+        if ((lat != 0.0 && lng != 0.0) || sellerLoc.isNotBlank()) {
             binding.btnViewMap.visibility = View.VISIBLE
             binding.btnViewMap.setOnClickListener {
-                val gmmIntentUri = Uri.parse("geo:$lat,$lng?q=$lat,$lng($sellerName's Location)")
+                val gmmIntentUri = if (lat != 0.0 && lng != 0.0) {
+                    Uri.parse("geo:$lat,$lng?q=$lat,$lng(${Uri.encode("$sellerName Location")})")
+                } else {
+                    Uri.parse("geo:0,0?q=${Uri.encode(sellerLoc)}")
+                }
                 val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                 mapIntent.setPackage("com.google.android.apps.maps")
                 if (mapIntent.resolveActivity(packageManager) != null) {
                     startActivity(mapIntent)
                 } else {
-                    val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng"))
+                    val query = if (lat != 0.0 && lng != 0.0) "$lat,$lng" else sellerLoc
+                    val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/search/?api=1&query=${Uri.encode(query)}"))
                     startActivity(webIntent)
                 }
             }

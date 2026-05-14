@@ -1,16 +1,28 @@
 package com.hallisanthe.ui.upload
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.hallisanthe.R
@@ -19,7 +31,12 @@ import com.hallisanthe.model.Category
 import com.hallisanthe.model.Product
 import com.hallisanthe.repository.ProductRepository
 import com.hallisanthe.repository.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.Locale
 
 class UploadProductActivity : AppCompatActivity() {
@@ -27,8 +44,21 @@ class UploadProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadProductBinding
     private var selectedImageUri: Uri? = null
     private val repo by lazy { ProductRepository(this) }
+    private val locationManager by lazy { getSystemService(Context.LOCATION_SERVICE) as LocationManager }
     private var capturedLat: Double = 0.0
     private var capturedLng: Double = 0.0
+
+    private val requestLocationPermission = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { grants ->
+        val granted = grants[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+            grants[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+        if (granted) {
+            captureLocation()
+        } else {
+            Toast.makeText(this, "Location permission is required to capture map coordinates", Toast.LENGTH_LONG).show()
+        }
+    }
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -58,12 +88,156 @@ class UploadProductActivity : AppCompatActivity() {
     }
 
     private fun captureLocation() {
-        // Simulation: In a real app, this would use FusedLocationProvider or a Map Picker Activity
-        capturedLat = 12.9716 // Example: Bangalore
-        capturedLng = 77.5946
-        binding.btnGetLocation.text = "📍 Location Captured: $capturedLat, $capturedLng"
+        if (!hasLocationPermission()) {
+            requestLocationPermission.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+            return
+        }
+
+        if (!isDeviceLocationEnabled()) {
+            showEnableLocationDialog()
+            return
+        }
+
+        binding.btnGetLocation.isEnabled = false
+        binding.btnGetLocation.text = "Capturing current location..."
+
+        try {
+            val location = getBestLastKnownLocation()
+            if (location != null) {
+                applyLocation(location)
+                return
+            }
+
+            val provider = getEnabledLocationProvider()
+            if (provider == null) {
+                binding.btnGetLocation.isEnabled = true
+                binding.btnGetLocation.text = "Capture Map Location"
+                showEnableLocationDialog()
+                return
+            }
+
+            locationManager.requestSingleUpdate(
+                provider,
+                object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        applyLocation(location)
+                    }
+                },
+                Looper.getMainLooper()
+            )
+        } catch (e: SecurityException) {
+            binding.btnGetLocation.isEnabled = true
+            binding.btnGetLocation.text = "Capture Map Location"
+            Toast.makeText(this, "Location permission was not granted", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            binding.btnGetLocation.isEnabled = true
+            binding.btnGetLocation.text = "Capture Map Location"
+            Toast.makeText(this, "Could not capture location: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun isDeviceLocationEnabled(): Boolean {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun showEnableLocationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Turn on location")
+            .setMessage("Enable device location to capture map coordinates for this product.")
+            .setPositiveButton("Open Settings") { _: DialogInterface, _: Int ->
+                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun getBestLastKnownLocation(): Location? {
+        val providers = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
+        return providers.mapNotNull { provider ->
+            if (locationManager.isProviderEnabled(provider)) locationManager.getLastKnownLocation(provider) else null
+        }.maxByOrNull { it.time }
+    }
+
+    private fun getEnabledLocationProvider(): String? {
+        return when {
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> LocationManager.GPS_PROVIDER
+            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
+            else -> null
+        }
+    }
+
+    private fun applyLocation(location: Location) {
+        capturedLat = location.latitude
+        capturedLng = location.longitude
+        binding.btnGetLocation.isEnabled = true
+        binding.btnGetLocation.text = "Resolving address..."
         binding.btnGetLocation.setTextColor(resources.getColor(R.color.market_green, null))
-        Toast.makeText(this, "Location details captured successfully!", Toast.LENGTH_SHORT).show()
+
+        lifecycleScope.launch {
+            val address = withContext(Dispatchers.IO) {
+                reverseGeocode(capturedLat, capturedLng)
+            }
+
+            if (address.isNotBlank()) {
+                binding.etSellerLocation.setText(address)
+                binding.btnGetLocation.text = "Location Captured"
+                Toast.makeText(this@UploadProductActivity, "Location captured: $address", Toast.LENGTH_LONG).show()
+            } else {
+                binding.btnGetLocation.text = "Location Captured: %.5f, %.5f".format(capturedLat, capturedLng)
+                Toast.makeText(
+                    this@UploadProductActivity,
+                    "Coordinates captured, but address lookup failed. Check internet/location services.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    private fun reverseGeocode(latitude: Double, longitude: Double): String {
+        val androidAddress = try {
+            val geocoder = Geocoder(this, Locale.getDefault())
+            @Suppress("DEPRECATION")
+            val result = geocoder.getFromLocation(latitude, longitude, 1)?.firstOrNull()
+            result?.getAddressLine(0).orEmpty()
+        } catch (_: Exception) {
+            ""
+        }
+
+        return androidAddress.ifBlank {
+            reverseGeocodeFromNetwork(latitude, longitude)
+        }
+    }
+
+    private fun reverseGeocodeFromNetwork(latitude: Double, longitude: Double): String {
+        return try {
+            val url = URL(
+                "https://nominatim.openstreetmap.org/reverse?format=jsonv2" +
+                    "&lat=$latitude&lon=$longitude&zoom=18&addressdetails=1"
+            )
+            val connection = (url.openConnection() as HttpURLConnection).apply {
+                requestMethod = "GET"
+                connectTimeout = 7000
+                readTimeout = 7000
+                setRequestProperty("User-Agent", "HalliSanthe/1.0 Android")
+            }
+
+            connection.inputStream.bufferedReader().use { reader ->
+                JSONObject(reader.readText()).optString("display_name")
+            }
+        } catch (_: Exception) {
+            ""
+        }
     }
 
     private fun setupLanguageToggle() {
